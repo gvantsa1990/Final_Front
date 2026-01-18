@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Front-End Final Project">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Front-End, Website, UI">
+    <meta name="author" content="Gvantsa Nadiradze">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eLearn - Master Your Skills</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700;800&family=Krona+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <a href="./index.html" class="logo">eLearn</a>
+
+      <input type="checkbox" name="nav-burger-btn" id="nav-burger-btn">
+      
+      <label class="nav-burger menu-icon" for="nav-burger-btn"><i class="fas fa-bars"></i></label>
+
+      <nav class="nav">
+        <ul class="nav-ul">
+          <li><a href="./index.html" class="nav-link">Home</a></li>
+          <span class="nav-separator">|</span>
+          <li><a href="./courses.html" class="nav-link">Courses</a></li>
+          <span class="nav-separator">|</span>
+          <li><a href="./login.html" id="navUserLink" class="nav-link">Login</a></li>
+          <li><a href="./cart.html" class="cart-icon cart-icon-mobile menu-icon"><i class="fas fa-shopping-cart"></i></a></li>
+        </ul>
+      </nav>
+
+      <a href="./cart.html" class="cart-icon menu-icon">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content full-width">
+      <div class="container full-width">
+        <!-- Hero Title -->
+        <h1 class="hero-title">Unlock Your Network Potential</h1>
+
+        <!-- Hero Subtitle -->
+        <p class="hero-subtitle">
+          Master networking, cybersecurity, and programming — for free, online,
+          and at your own pace.
+        </p>
+
+        <!-- Hero Images -->
+        <div class="hero-images">
+          <div class="hero-image left">
+            <img src="images/students-say-at-dania-university-denmark 1.png" alt="Students learning together" />
+          </div>
+
+          <!-- CTA Buttons -->
+        <div class="cta-buttons">
+          <a href="./courses.html" class="btn btn-primary">Start Learning</a>
+          <a href="./login.html" class="btn btn-white">Login</a>
+        </div>
+
+          <div class="hero-image right">
+            <img
+              src="images/skillstoJobImage 1.png"
+              alt="Students collaborating on skills"
+            />
+          </div>
+        </di>
+      </div>
+    </main>
+
+    <script src="./scripts/script.js"></script>
+  </body>
+</html>

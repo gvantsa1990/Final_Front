@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Front-End Final Project" />
+    <meta
+      name="keywords"
+      content="HTML, CSS, JavaScript, Front-End, Website, UI"
+    />
+    <meta name="author" content="Gvantsa Nadiradze" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Details - eLearn</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700;800&family=Krona+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <a href="./index.html" class="logo">eLearn</a>
+
+      <input type="checkbox" name="nav-burger-btn" id="nav-burger-btn" />
+
+      <label class="nav-burger menu-icon" for="nav-burger-btn"
+        ><i class="fas fa-bars"></i
+      ></label>
+
+      <nav class="nav">
+        <ul class="nav-ul">
+          <li><a href="./index.html" class="nav-link">Home</a></li>
+          <span class="nav-separator">|</span>
+          <li><a href="./courses.html" class="nav-link">Courses</a></li>
+          <span class="nav-separator">|</span>
+          <li>
+            <a href="./login.html" id="navUserLink" class="nav-link">Login</a>
+          </li>
+          <li>
+            <a href="./cart.html" class="cart-icon cart-icon-mobile menu-icon"
+              ><i class="fas fa-shopping-cart"></i
+            ></a>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="./cart.html" class="cart-icon menu-icon">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="course-detail-wrapper">
+          <div class="course-image">
+            <div
+              id="courseImagePlaceholder"
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f0f0f0;
+                overflow: hidden;
+                border-radius: 20px;
+              "
+            >
+              <i
+                class="fas fa-book-open"
+                style="font-size: 4rem; color: #999"
+              ></i>
+            </div>
+          </div>
+
+          <div class="course-info">
+            <h1 id="courseTitle" class="course-detail-title">Loading...</h1>
+            <p id="courseDesc" class="course-detail-description">
+              Please wait while we fetch the course details.
+            </p>
+
+            <div style="margin-top: 2rem">
+              <h3>Course Syllabus</h3>
+              <ul
+                id="courseTopics"
+                style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.6"
+              ></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-detail-footer">
+          <button class="btn btn-primary btn-choose" onclick="chooseCourse()">
+            Choose Course
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./scripts/script.js"></script>
+    <script>
+      function getCourseTitleFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("title");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        updateUserName();
+        const courseTitle = getCourseTitleFromUrl();
+
+        if (courseTitle) {
+          loadCourseDetails(courseTitle);
+        } else {
+          document.getElementById("courseTitle").textContent =
+            "Course Not Found";
+          document.getElementById("courseDesc").textContent =
+            "No course title was provided.";
+        }
+      });
+
+      function loadCourseDetails(title) {
+        const titleEl = document.getElementById("courseTitle");
+        const descEl = document.getElementById("courseDesc");
+        const topicsEl = document.getElementById("courseTopics");
+        const imgPlaceholder = document.getElementById(
+          "courseImagePlaceholder",
+        );
+
+        titleEl.textContent = title;
+
+        fetch(
+          `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            descEl.textContent = data.extract || "No description available.";
+
+            imgPlaceholder.innerHTML = `<img src="images/${title}.png" alt="${title}" style="width:100%; height:100%; object-fit:cover;">`;
+
+            // Fake syllabus
+            const syllabus = [
+              `Introduction to ${title}`,
+              `${title} Fundamentals`,
+              `Advanced ${title} Concepts`,
+              `${title} Practical Labs`,
+              `${title} Final Project`,
+            ];
+
+            topicsEl.innerHTML = "";
+            syllabus.forEach((topic) => {
+              const li = document.createElement("li");
+              li.textContent = topic;
+              topicsEl.appendChild(li);
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            descEl.textContent = "Unable to load course details.";
+          });
+      }
+
+      function chooseCourse() {
+        const courseName = document.getElementById("courseTitle").textContent;
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart.push({
+          id: Date.now(),
+          name: courseName,
+        });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Course added to cart!");
+        window.location.href = "./cart.html";
+      }
+    </script>
+  </body>
+</html>
